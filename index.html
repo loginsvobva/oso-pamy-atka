@@ -105,6 +105,18 @@ em.free { font-style: italic; opacity: 0.55; }
 /* Состав внутри «Повышения»: карточка прижата влево, текст по левому краю */
 #povyshenie .card.sostav-card { margin-left: 0; margin-right: auto; text-align: left; }
 #povyshenie .roster-line { text-align: left; }
+
+/* Выделение текста запрещено везде, кроме правовых разделов */
+* { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; -webkit-touch-callout: none; }
+#fz, #ustav, #kodeks, #koap, #fz *, #ustav *, #kodeks *, #koap *,
+input, textarea, #search, #search * { -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; -webkit-touch-callout: default; }
+/* Подсветка команд /do при наведении и копировании */
+.do-block { cursor: pointer; transition: background 0.2s; }
+.do-block:hover { background: rgba(212,175,55,0.18); }
+.do-block.copied-flash { background: rgba(212,175,55,0.35) !important; }
+.copy-toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: #141414; color: #d4af37; border: 1px solid #d4af37; padding: 10px 22px; border-radius: 10px; font-size: 15px; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.copy-toast.show { opacity: 1; }
+
 </style>
 </head>
 <body>
@@ -1997,11 +2009,11 @@ em.free { font-style: italic; opacity: 0.55; }
 <tr><td>Сопровождение крафта</td><td><strong>30 баллов</strong></td><td>скриншот</td></tr>
 <tr><td>Задержание человека и привоз‑передача в МВД/ФСБ</td><td><strong>20 баллов</strong></td><td>скриншот</td></tr>
 <tr><td>Отбитие нападения</td><td><strong>50 баллов</strong></td><td>скриншот с силовыми структурами</td></tr>
-<tr><td>Объявление благодарности первых лиц с доказательствами во время кортежа</td><td><strong>+70 баллов</strong></td><td></td></tr>
-<tr><td>Установка камеры</td><td><strong>+20 баллов</strong></td><td></td></tr>
-<tr><td>Объявление благодарности Зам. директора, Директора ФСО</td><td><strong>+100 баллов</strong></td><td>скриншот</td></tr>
-<tr><td>Любое МП AIRDrop и т. п.</td><td><strong>+50 баллов</strong></td><td>скриншот</td></tr>
-<tr><td>За найденное нарушение и выданный выговор</td><td><strong>+20 баллов</strong></td><td>скриншот</td></tr>
+<tr><td>Объявление благодарности первых лиц с доказательствами во время кортежа</td><td><strong>70 баллов</strong></td><td>скриншот</td></tr>
+<tr><td>Установка камеры</td><td><strong>20 баллов</strong></td><td>скриншот</td></tr>
+<tr><td>Объявление благодарности Зам. директора, Директора ФСО</td><td><strong>100 баллов</strong></td><td>скриншот</td></tr>
+<tr><td>Любое МП AIRDrop и т. п.</td><td><strong>50 баллов</strong></td><td>скриншот</td></tr>
+<tr><td>За найденное нарушение и выданный выговор</td><td><strong>20 баллов</strong></td><td>скриншот</td></tr>
 </table>
 </div>
 <div class="card sostav-card">
@@ -2329,6 +2341,43 @@ window.addEventListener('scroll', function () {
 backtop.addEventListener('click', function () {
   window.scrollTo({top: 0, behavior: 'smooth'});
 });
+
+// Копирование команд /do по клику
+(function () {
+  var toast = document.createElement('div');
+  toast.className = 'copy-toast';
+  toast.textContent = 'Команда скопирована';
+  document.body.appendChild(toast);
+  var tId;
+  function showToast() {
+    toast.classList.add('show');
+    clearTimeout(tId);
+    tId = setTimeout(function () { toast.classList.remove('show'); }, 1500);
+  }
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+  document.querySelectorAll('.do-block').forEach(function (block) {
+    block.addEventListener('click', function () {
+      var text = block.textContent.trim();
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(showToast, function () { fallbackCopy(text); showToast(); });
+      } else {
+        fallbackCopy(text);
+        showToast();
+      }
+      block.classList.add('copied-flash');
+      setTimeout(function () { block.classList.remove('copied-flash'); }, 500);
+    });
+  });
+})();
 </script>
 </body>
 </html>
