@@ -101,6 +101,10 @@ em.free { font-style: italic; opacity: 0.55; }
 .photo-card figcaption{margin-top:10px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.85);text-align:left}
 .do-block{background:rgba(212,175,55,.12);border-left:3px solid #d4af37;padding:10px 14px;border-radius:0 8px 8px 0;font-family:monospace;font-size:14px;margin:8px 0;white-space:pre-wrap}
 .law{font-style:italic;color:rgba(255,255,255,.65);font-size:14px;margin-top:4px}
+
+/* Состав внутри «Повышения»: карточка прижата влево, текст по левому краю */
+#povyshenie .card.sostav-card { margin-left: 0; margin-right: auto; text-align: left; }
+#povyshenie .roster-line { text-align: left; }
 </style>
 </head>
 <body>
@@ -141,8 +145,7 @@ em.free { font-style: italic; opacity: 0.55; }
 <li class="nav-item" data-id="kodeks">Уголовный кодекс</li>
 <li class="nav-item" data-id="koap">КОАП</li>
 <li class="nav-item" data-id="kpp">КПП</li>
-<li class="nav-item" data-id="povyshenie">Повышение</li>
-<li class="nav-item" data-id="sostav">Состав</li>
+<li class="nav-item" data-id="povyshenie">Повышение и состав ОСО</li>
 <li class="nav-item" data-id="instructors">Для инструкторов</li>
 <li class="nav-item" data-id="knowledge">Что нужно знать</li>
 </ul>
@@ -1982,7 +1985,7 @@ em.free { font-style: italic; opacity: 0.55; }
 </div>
 
 <div id="povyshenie" class="section" style="display: none;">
-<h1 class="section-title">Повышение</h1>
+<h1 class="section-title">Повышение и состав ОСО</h1>
 
 <div class="card">
 <h2>Как получить баллы</h2>
@@ -2001,22 +2004,19 @@ em.free { font-style: italic; opacity: 0.55; }
 <tr><td>За найденное нарушение и выданный выговор</td><td><strong>+20 баллов</strong></td><td>скриншот</td></tr>
 </table>
 </div>
-</div>
-
-<div id="sostav" class="section" style="display: none;">
-<h1 class="section-title">Состав</h1>
-<div class="card">
-<h2>👑 Руководство</h2>
+<div class="card sostav-card">
+<h2>Состав отдела ОСО</h2>
+<h3>👑 Руководство</h3>
 <p><strong>Куратор ОСО</strong></p>
 <p class="roster-line">└ Зам.Дир ФСО | В. Рубцов | 81033</p>
 <p><strong>Начальник ОСО</strong></p>
-<p class="roster-line">└ Нач.ОСО | Артем Волков | 103501</p>
+<p class="roster-line">└ Нач.ОСО | Артем Рубцов | 103501</p>
 <p><strong>Зам.Начальника</strong></p>
 <p class="roster-line">├ 1. Зам.Нач | Борис Стаев | 104644</p>
 <p class="roster-line">├ 2. Зам.Нач | М. Сапфирова | 109325</p>
 <p class="roster-line">├ 3. Зам.Нач | E.Сапфиров | 114672</p>
-<p class="roster-line">└ 4. <em class="free">Свободно</em></p>
-<h2>🎓 Инструкторский состав</h2>
+<p class="roster-line">└ 4. Зам.Нач.ОСО | Д. Ястреб | 116055</p>
+<h3>🎓 Инструкторский состав</h3>
 <p><strong>Инструкторы:</strong></p>
 <p class="roster-line">├ 1.Старший Инструктор | ОСО | Кристина Корсарова | 109818</p>
 <p class="roster-line">├ 2. ОСО | Мира Штиль | 44078</p>
@@ -2204,7 +2204,7 @@ em.free { font-style: italic; opacity: 0.55; }
 <button id="backtop" title="Наверх">&#8593;</button>
 
 <script>
-var titles = {about: 'Что такое ОСО', dresscode: 'Дрескод', routes: 'Маршруты сопровождения', fz: 'ФЗ о гос. охране', ustav: 'Устав ФСО', kodeks: 'Уголовный кодекс', koap: 'КОАП', kpp: 'КПП', povyshenie: 'Повышение', sostav: 'Состав', instructors: 'Для инструкторов', knowledge: 'Что нужно знать'};
+var titles = {about: 'Что такое ОСО', dresscode: 'Дрескод', routes: 'Маршруты сопровождения', fz: 'ФЗ о гос. охране', ustav: 'Устав ФСО', kodeks: 'Уголовный кодекс', koap: 'КОАП', kpp: 'КПП', povyshenie: 'Повышение и состав ОСО', instructors: 'Для инструкторов', knowledge: 'Что нужно знать'};
 var firstMarkRef = {};
 var origCache = {};
 
