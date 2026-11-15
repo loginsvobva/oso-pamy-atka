@@ -65,7 +65,13 @@ li { margin-bottom: 8px; }
 .doc-header div:first-child { font-size: 22px; }
 .doc-header div:last-child { font-size: 19px; margin-top: 4px; letter-spacing: 1px; color: var(--gold); }
 .dress-grid { display: grid; grid-template-columns: 1fr; gap: 26px; margin: 20px 0; }
-.dress-card { background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; box-shadow: 0 4px 14px rgba(0,0,0,0.3); }
+.dress-card { background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; box-shadow: 0 4px 14px rgba(0,0,0,0.3); max-width: 420px; margin: 0; }
+.pov-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+.pov-table th { background: rgba(0,0,0,0.45); color: #e8d9a0; text-align: left; padding: 10px 12px; font-size: 14px; letter-spacing: 0.3px; }
+.pov-table td { padding: 10px 12px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 15px; vertical-align: top; }
+.pov-table tr:nth-child(even) td { background: rgba(255,255,255,0.03); }
+.roster-line { margin: 4px 0; font-size: 15px; }
+em.free { font-style: italic; opacity: 0.55; }
 .dress-card img { width: 100%; display: block; }
 .dress-card .dress-cap { padding: 12px 16px; }
 .dress-card .dress-cap b { color: var(--gold); font-size: 17px; display: block; margin-bottom: 4px; }
@@ -135,6 +141,8 @@ li { margin-bottom: 8px; }
 <li class="nav-item" data-id="kodeks">Уголовный кодекс</li>
 <li class="nav-item" data-id="koap">КОАП</li>
 <li class="nav-item" data-id="kpp">КПП</li>
+<li class="nav-item" data-id="povyshenie">Повышение</li>
+<li class="nav-item" data-id="sostav">Состав</li>
 <li class="nav-item" data-id="instructors">Для инструкторов</li>
 <li class="nav-item" data-id="knowledge">Что нужно знать</li>
 </ul>
@@ -1973,6 +1981,52 @@ li { margin-bottom: 8px; }
 </div>
 </div>
 
+<div id="povyshenie" class="section" style="display: none;">
+<h1 class="section-title">Повышение</h1>
+
+<div class="card">
+<h2>Как получить баллы</h2>
+<p>За перечисленные ниже действия начисляются баллы, идущие в зачёт на повышение. В колонке «Подтверждение» указано, что нужно приложить как доказательство. Баллы суммируются с другими активностями отдела.</p>
+<table class="pov-table">
+<tr><th>Действие</th><th>Баллы</th><th>Подтверждение</th></tr>
+<tr><td>Дежурство на КПП (1 час)</td><td><strong>20 баллов</strong></td><td>через команду /do пишем «Заступил на дежурство 11:00», скриншот времени 11:00, 11:30, 12:00; в конце также через /do «Дежурство окончил» — начало + конец</td></tr>
+<tr><td>Участие в кортеже</td><td><strong>40 баллов</strong></td><td>скриншот состава кортежа после окончания кортежа на парковке с охраняемым лицом</td></tr>
+<tr><td>Сопровождение крафта</td><td><strong>30 баллов</strong></td><td>скриншот</td></tr>
+<tr><td>Задержание человека и привоз‑передача в МВД/ФСБ</td><td><strong>20 баллов</strong></td><td>скриншот</td></tr>
+<tr><td>Отбитие нападения</td><td><strong>50 баллов</strong></td><td>скриншот с силовыми структурами</td></tr>
+<tr><td>Объявление благодарности первых лиц с доказательствами во время кортежа</td><td><strong>+70 баллов</strong></td><td></td></tr>
+<tr><td>Установка камеры</td><td><strong>+20 баллов</strong></td><td></td></tr>
+<tr><td>Объявление благодарности Зам. директора, Директора ФСО</td><td><strong>+100 баллов</strong></td><td>скриншот</td></tr>
+<tr><td>Любое МП AIRDrop и т. п.</td><td><strong>+50 баллов</strong></td><td>скриншот</td></tr>
+<tr><td>За найденное нарушение и выданный выговор</td><td><strong>+20 баллов</strong></td><td>скриншот</td></tr>
+</table>
+</div>
+</div>
+
+<div id="sostav" class="section" style="display: none;">
+<h1 class="section-title">Состав</h1>
+<div class="card">
+<h2>👑 Руководство</h2>
+<p><strong>Куратор ОСО</strong></p>
+<p class="roster-line">└ Зам.Дир ФСО | В. Рубцов | 81033</p>
+<p><strong>Начальник ОСО</strong></p>
+<p class="roster-line">└ Нач.ОСО | Артем Волков | 103501</p>
+<p><strong>Зам.Начальника</strong></p>
+<p class="roster-line">├ 1. Зам.Нач | Борис Стаев | 104644</p>
+<p class="roster-line">├ 2. Зам.Нач | М. Сапфирова | 109325</p>
+<p class="roster-line">├ 3. Зам.Нач | E.Сапфиров | 114672</p>
+<p class="roster-line">└ 4. <em class="free">Свободно</em></p>
+<h2>🎓 Инструкторский состав</h2>
+<p><strong>Инструкторы:</strong></p>
+<p class="roster-line">├ 1.Старший Инструктор | ОСО | Кристина Корсарова | 109818</p>
+<p class="roster-line">├ 2. ОСО | Мира Штиль | 44078</p>
+<p class="roster-line">├ 3. ОСО | Станислав Буров | 113111.</p>
+<p class="roster-line">├ 4. <em class="free">Свободно</em></p>
+<p class="roster-line">├ 5. <em class="free">Свободно</em></p>
+<p class="roster-line">└ 6. <em class="free">Свободно</em></p>
+</div>
+</div>
+
 <div id="instructors" class="section" style="display: none;">
 <h1 class="section-title">Для инструкторов</h1>
 
@@ -2150,7 +2204,7 @@ li { margin-bottom: 8px; }
 <button id="backtop" title="Наверх">&#8593;</button>
 
 <script>
-var titles = {about: 'Что такое ОСО', dresscode: 'Дрескод', routes: 'Маршруты сопровождения', fz: 'ФЗ о гос. охране', ustav: 'Устав ФСО', kodeks: 'Уголовный кодекс', koap: 'КОАП', kpp: 'КПП', instructors: 'Для инструкторов', knowledge: 'Что нужно знать'};
+var titles = {about: 'Что такое ОСО', dresscode: 'Дрескод', routes: 'Маршруты сопровождения', fz: 'ФЗ о гос. охране', ustav: 'Устав ФСО', kodeks: 'Уголовный кодекс', koap: 'КОАП', kpp: 'КПП', povyshenie: 'Повышение', sostav: 'Состав', instructors: 'Для инструкторов', knowledge: 'Что нужно знать'};
 var firstMarkRef = {};
 var origCache = {};
 
