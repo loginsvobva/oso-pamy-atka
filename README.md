@@ -1,1 +1,1 @@
-# oso-pamy-atka
+# oso-pamyatka
