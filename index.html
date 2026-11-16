@@ -102,21 +102,25 @@ em.free { font-style: italic; opacity: 0.55; }
 .do-block{background:rgba(212,175,55,.12);border-left:3px solid #d4af37;padding:10px 14px;border-radius:0 8px 8px 0;font-family:monospace;font-size:14px;margin:8px 0;white-space:pre-wrap}
 .law{font-style:italic;color:rgba(255,255,255,.65);font-size:14px;margin-top:4px}
 
-/* Состав внутри «Повышения»: карточка прижата влево, текст по левому краю */
-#povyshenie .card.sostav-card { margin-left: 0; margin-right: auto; text-align: left; }
-#povyshenie .roster-line { text-align: left; }
+/* Состав: карточка прижата влево, текст по левому краю */
+#sostav .card { margin-left: 0; margin-right: auto; text-align: left; }
+#sostav .roster-line { text-align: left; }
 
-/* Выделение текста запрещено везде, кроме правовых разделов */
-* { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; -webkit-touch-callout: none; }
-#fz, #ustav, #kodeks, #koap, #fz *, #ustav *, #kodeks *, #koap *,
-input, textarea, #search, #search * { -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; -webkit-touch-callout: default; }
-/* Подсветка команд /do при наведении и копировании */
-.do-block { cursor: pointer; transition: background 0.2s; }
-.do-block:hover { background: rgba(212,175,55,0.18); }
-.do-block.copied-flash { background: rgba(212,175,55,0.35) !important; }
-.copy-toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: #141414; color: #d4af37; border: 1px solid #d4af37; padding: 10px 22px; border-radius: 10px; font-size: 15px; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
-.copy-toast.show { opacity: 1; }
+/* Копирование команды /do по клику на блок */
+.do-block{cursor:pointer;transition:background .15s}
+.do-block:hover{background:rgba(212,175,55,.28)}
+.do-block:active{background:rgba(212,175,55,.45)}
+.do-block.copied{background:rgba(212,175,55,.45)}
+#copy-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#d4af37;color:#0f1115;font-weight:700;font-size:14px;padding:10px 22px;border-radius:24px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:9999}
+#copy-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
+/* Выделение текста запрещено везде, кроме правовых разделов и поиска */
+body, .section, .card, .do-block, table, h1, h2, h3, p {
+  -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
+}
+#fz *, #ustav *, #kodeks *, #koap *, #search, #search * {
+  -webkit-user-select: text !important; -moz-user-select: text !important; -ms-user-select: text !important; user-select: text !important;
+}
 </style>
 </head>
 <body>
@@ -1997,7 +2001,7 @@ input, textarea, #search, #search * { -webkit-user-select: text; -moz-user-selec
 </div>
 
 <div id="povyshenie" class="section" style="display: none;">
-<h1 class="section-title">Повышение и состав ОСО</h1>
+<h1 class="section-title">Повышение</h1>
 
 <div class="card">
 <h2>Как получить баллы</h2>
@@ -2016,26 +2020,11 @@ input, textarea, #search, #search * { -webkit-user-select: text; -moz-user-selec
 <tr><td>За найденное нарушение и выданный выговор</td><td><strong>20 баллов</strong></td><td>скриншот</td></tr>
 </table>
 </div>
+
 <div class="card sostav-card">
-<h2>Состав отдела ОСО</h2>
-<h3>👑 Руководство</h3>
+<h2>👑 Куратор отдела</h2>
 <p><strong>Куратор ОСО</strong></p>
 <p class="roster-line">└ Зам.Дир ФСО | В. Рубцов | 81033</p>
-<p><strong>Начальник ОСО</strong></p>
-<p class="roster-line">└ Нач.ОСО | Артем Рубцов | 103501</p>
-<p><strong>Зам.Начальника</strong></p>
-<p class="roster-line">├ 1. Зам.Нач | Борис Стаев | 104644</p>
-<p class="roster-line">├ 2. Зам.Нач | М. Сапфирова | 109325</p>
-<p class="roster-line">├ 3. Зам.Нач | E.Сапфиров | 114672</p>
-<p class="roster-line">└ 4. Зам.Нач.ОСО | Д. Ястреб | 116055</p>
-<h3>🎓 Инструкторский состав</h3>
-<p><strong>Инструкторы:</strong></p>
-<p class="roster-line">├ 1.Старший Инструктор | ОСО | Кристина Корсарова | 109818</p>
-<p class="roster-line">├ 2. ОСО | Мира Штиль | 44078</p>
-<p class="roster-line">├ 3. ОСО | Станислав Буров | 113111.</p>
-<p class="roster-line">├ 4. <em class="free">Свободно</em></p>
-<p class="roster-line">├ 5. <em class="free">Свободно</em></p>
-<p class="roster-line">└ 6. <em class="free">Свободно</em></p>
 </div>
 </div>
 
@@ -2342,39 +2331,40 @@ backtop.addEventListener('click', function () {
   window.scrollTo({top: 0, behavior: 'smooth'});
 });
 
-// Копирование команд /do по клику
-(function () {
+/* Копирование команд /do кликом по блоку */
+(function(){
   var toast = document.createElement('div');
-  toast.className = 'copy-toast';
+  toast.id = 'copy-toast';
   toast.textContent = 'Команда скопирована';
   document.body.appendChild(toast);
-  var tId;
-  function showToast() {
+  var toastTimer = null;
+  function showToast(){
     toast.classList.add('show');
-    clearTimeout(tId);
-    tId = setTimeout(function () { toast.classList.remove('show'); }, 1500);
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 1400);
   }
-  function fallbackCopy(text) {
+  function copyText(t){
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(t);
+    }
     var ta = document.createElement('textarea');
-    ta.value = text;
+    ta.value = t;
     ta.style.position = 'fixed';
     ta.style.opacity = '0';
     document.body.appendChild(ta);
+    ta.focus();
     ta.select();
-    try { document.execCommand('copy'); } catch (e) {}
+    try { document.execCommand('copy'); } catch(e) {}
     document.body.removeChild(ta);
+    return Promise.resolve();
   }
-  document.querySelectorAll('.do-block').forEach(function (block) {
-    block.addEventListener('click', function () {
-      var text = block.textContent.trim();
-      if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(text).then(showToast, function () { fallbackCopy(text); showToast(); });
-      } else {
-        fallbackCopy(text);
-        showToast();
-      }
-      block.classList.add('copied-flash');
-      setTimeout(function () { block.classList.remove('copied-flash'); }, 500);
+  document.querySelectorAll('.do-block').forEach(function(b){
+    b.title = 'Нажмите, чтобы скопировать команду';
+    b.addEventListener('click', function(){
+      var txt = b.textContent.replace(/\s+$/,'').trim();
+      copyText(txt).then(function(){ showToast(); }, function(){ showToast(); });
+      b.classList.add('copied');
+      setTimeout(function(){ b.classList.remove('copied'); }, 500);
     });
   });
 })();
